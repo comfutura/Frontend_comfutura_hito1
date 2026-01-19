@@ -1,0 +1,34 @@
+/* dashboard.component.css */
+.bg-gradient-primary {
+  background: linear-gradient(180deg, #4f46e5 0%, #4338ca 100%);
+}
+
+.card-kpi {
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.card-kpi:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(79, 70, 229, 0.18) !important;
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-success:hover,
+.btn-outline-info:hover,
+.btn-outline-danger:hover {
+  color: white;
+  transform: translateY(-2px);
+}

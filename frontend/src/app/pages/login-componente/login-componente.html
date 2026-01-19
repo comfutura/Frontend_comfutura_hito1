@@ -1,0 +1,98 @@
+<p>login works!</p>
+<!-- login.component.html -->
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card login-card shadow-lg border-0 overflow-hidden">
+    <div class="row g-0">
+      <!-- Lado izquierdo - Imagen/Decoración -->
+      <div class="col-lg-6 d-none d-lg-block bg-gradient-primary position-relative">
+        <div class="overlay"></div>
+        <div class="content-overlay d-flex flex-column justify-content-center align-items-center text-white p-5">
+          <h1 class="display-4 fw-bold mb-4">Comfutura</h1>
+          <p class="lead text-center opacity-75">
+            Gestión inteligente para tu empresa
+          </p>
+          <div class="mt-5">
+            <i class="bi bi-shield-lock-fill display-1"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lado derecho - Formulario -->
+      <div class="col-lg-6 col-12">
+        <div class="card-body p-5 p-lg-5">
+          <div class="text-center mb-5">
+            <h2 class="fw-bold text-primary">Iniciar Sesión</h2>
+            <p class="text-muted">Ingresa tus credenciales para continuar</p>
+          </div>
+
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="mb-4">
+              <label class="form-label fw-medium">Usuario</label>
+              <div class="input-group input-group-lg">
+                <span class="input-group-text bg-light border-end-0">
+                  <i class="bi bi-person-fill text-muted"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="username"
+                  placeholder="ejemplo@empresa.com"
+                  [class.is-invalid]="loginForm.get('username')?.touched && loginForm.get('username')?.invalid"
+                >
+              </div>
+              <div class="invalid-feedback" *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.hasError('required')">
+                El usuario es obligatorio
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-medium">Contraseña</label>
+              <div class="input-group input-group-lg">
+                <span class="input-group-text bg-light border-end-0">
+                  <i class="bi bi-lock-fill text-muted"></i>
+                </span>
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  class="form-control"
+                  formControlName="password"
+                  placeholder="••••••••"
+                  [class.is-invalid]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+                >
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  (click)="togglePassword()"
+                >
+                  <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')">
+                La contraseña es obligatoria
+              </div>
+            </div>
+
+            <div class="d-grid mb-4">
+              <button
+                type="submit"
+                class="btn btn-primary btn-lg fw-bold"
+                [disabled]="loginForm.invalid || isLoading"
+              >
+                <span *ngIf="!isLoading">Ingresar</span>
+                <span *ngIf="isLoading">
+                  <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                  Ingresando...
+                </span>
+              </button>
+            </div>
+
+            <div class="text-center">
+              <small class="text-muted">
+                ¿Olvidaste tu contraseña? <a href="#" class="text-primary text-decoration-none">Recuperar</a>
+              </small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
