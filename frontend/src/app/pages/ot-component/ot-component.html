@@ -1,0 +1,285 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-11 col-xl-10">
+
+      <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        <!-- Header -->
+    <!-- Header -->
+<div class="card-header bg-gradient-primary text-white py-4">
+  <div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+      <i class="bi bi-file-earmark-plus-fill fs-3 me-3"></i>
+      <h4 class="mb-0">Crear Orden de Trabajo Completa</h4>
+    </div>
+    <small class="opacity-75">
+      Usuario: {{ usernameLogueado }}
+      <span class="ms-2 text-white-50" *ngIf="trabajadorIdLogueado"> (ID: {{ trabajadorIdLogueado }})</span>
+    </small>
+  </div>
+</div>
+
+        <!-- Body -->
+        <div class="card-body p-4 p-md-5">
+
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+            <!-- Sección 1: Datos principales -->
+            <h5 class="mb-4 pb-2 border-bottom text-primary">
+              <i class="bi bi-info-circle me-2"></i> Información principal de la OT
+            </h5>
+
+            <div class="row g-4 mb-5">
+              <div class="col-md-4">
+                <label class="form-label fw-bold">N° OT <span class="text-danger">*</span></label>
+                <input type="number" class="form-control form-control-lg" formControlName="ot"
+                       [class.is-invalid]="submitted && f['ot'].invalid" placeholder="Ej: 20260001">
+                <div class="invalid-feedback" *ngIf="submitted && f['ot'].errors?.['required']">Obligatorio</div>
+                <div class="invalid-feedback" *ngIf="submitted && f['ot'].errors?.['min']">Mínimo 1</div>
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label fw-bold">CECO <span class="text-danger">*</span></label>
+                <input type="text" class="form-control form-control-lg" formControlName="ceco"
+                       [class.is-invalid]="submitted && f['ceco'].invalid" placeholder="Ej: 01-2026-001" maxlength="20">
+                <div class="invalid-feedback" *ngIf="submitted && f['ceco'].errors?.['required']">Obligatorio</div>
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Fecha Apertura <span class="text-danger">*</span></label>
+                <input type="date" class="form-control form-control-lg" formControlName="fechaApertura"
+                       [class.is-invalid]="submitted && f['fechaApertura'].invalid">
+                <div class="invalid-feedback" *ngIf="submitted && f['fechaApertura'].errors?.['required']">Obligatoria</div>
+              </div>
+            </div>
+
+            <div class="row g-4 mb-5">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Cliente <span class="text-danger">*</span></label>
+                <select class="form-select form-select-lg" formControlName="idCliente"
+                        [class.is-invalid]="submitted && f['idCliente'].invalid">
+                  <option value="">Seleccione cliente...</option>
+                  <option *ngFor="let c of clientes" [value]="c.id">{{ c.label }}</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="submitted && f['idCliente'].errors?.['required']">Obligatorio</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Área <span class="text-danger">*</span></label>
+                <select class="form-select form-select-lg" formControlName="idArea"
+                        [class.is-invalid]="submitted && f['idArea'].invalid">
+                  <option value="">Seleccione área...</option>
+                  <option *ngFor="let a of areas" [value]="a.id">{{ a.label }}</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="submitted && f['idArea'].errors?.['required']">Obligatorio</div>
+              </div>
+            </div>
+
+            <div class="row g-4 mb-5">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Proyecto <span class="text-danger">*</span></label>
+                <select class="form-select form-select-lg" formControlName="idProyecto"
+                        [class.is-invalid]="submitted && f['idProyecto'].invalid">
+                  <option value="">Seleccione proyecto...</option>
+                  <option *ngFor="let p of proyectos" [value]="p.id">{{ p.label }}</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="submitted && f['idProyecto'].errors?.['required']">Obligatorio</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Fase <span class="text-danger">*</span></label>
+                <select class="form-select form-select-lg" formControlName="idFase"
+                        [class.is-invalid]="submitted && f['idFase'].invalid">
+                  <option value="">Seleccione fase...</option>
+                  <option *ngFor="let f of fases" [value]="f.id">{{ f.label }}</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="submitted && f['idFase'].errors?.['required']">Obligatorio</div>
+              </div>
+            </div>
+
+            <div class="row g-4 mb-5">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Site <span class="text-danger">*</span></label>
+                <select class="form-select form-select-lg" formControlName="idSite"
+                        [class.is-invalid]="submitted && f['idSite'].invalid">
+                  <option value="">Seleccione site...</option>
+                  <option *ngFor="let s of sites" [value]="s.id">{{ s.label }}</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="submitted && f['idSite'].errors?.['required']">Obligatorio</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Región <span class="text-danger">*</span></label>
+                <select class="form-select form-select-lg" formControlName="idRegion"
+                        [class.is-invalid]="submitted && f['idRegion'].invalid">
+                  <option value="">Seleccione región...</option>
+                  <option *ngFor="let r of regiones" [value]="r.id">{{ r.label }}</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="submitted && f['idRegion'].errors?.['required']">Obligatorio</div>
+              </div>
+            </div>
+
+            <div class="mb-5">
+              <label class="form-label fw-bold">Descripción / Observaciones</label>
+              <textarea class="form-control form-control-lg" formControlName="descripcion" rows="4"
+                        placeholder="Alcance, comentarios, notas importantes..."></textarea>
+            </div>
+
+            <!-- Trabajadores -->
+            <h5 class="mb-4 pb-2 border-bottom text-primary">
+              <i class="bi bi-people-fill me-2"></i> Trabajadores asignados
+            </h5>
+
+            <div class="mb-4">
+              <button type="button" class="btn btn-outline-success mb-3" (click)="agregarTrabajador()">
+                <i class="bi bi-person-plus me-2"></i> Agregar trabajador
+              </button>
+
+              <div formArrayName="trabajadores">
+                <ng-container *ngFor="let item of trabajadoresArray.controls; let i = index" [formGroupName]="i">
+                  <div class="card mb-3 shadow-sm border-secondary">
+                    <div class="card-body">
+                      <div class="row g-3 align-items-end">
+                        <div class="col-md-5">
+                          <label class="form-label">Trabajador</label>
+                          <select class="form-select" formControlName="idTrabajador"
+                                  [class.is-invalid]="submitted && item.get('idTrabajador')?.invalid">
+                            <option value="">Seleccione...</option>
+                            <option *ngFor="let t of trabajadoresDisponibles" [value]="t.id">{{ t.label }}</option>
+                          </select>
+                          <div class="invalid-feedback" *ngIf="submitted && item.get('idTrabajador')?.errors?.['required']">
+                            Seleccione trabajador
+                          </div>
+                        </div>
+
+                        <div class="col-md-5">
+                          <label class="form-label">Rol / Función</label>
+                          <input type="text" class="form-control" formControlName="rolEnOt" placeholder="Ej: Supervisor, Técnico..."
+                                 [class.is-invalid]="submitted && item.get('rolEnOt')?.invalid">
+                          <div class="invalid-feedback" *ngIf="submitted && item.get('rolEnOt')?.errors?.['required']">
+                            Rol obligatorio
+                          </div>
+                        </div>
+
+                        <div class="col-md-2">
+                          <button type="button" class="btn btn-outline-danger w-100" (click)="eliminarTrabajador(i)">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <div *ngIf="trabajadoresArray.length === 0" class="alert alert-light text-center border py-4">
+                  No hay trabajadores asignados aún
+                </div>
+              </div>
+            </div>
+
+            <!-- Detalles -->
+            <h5 class="mb-4 pb-2 border-bottom text-primary">
+              <i class="bi bi-list-check me-2"></i> Detalles (materiales / servicios)
+            </h5>
+
+            <div class="mb-4">
+              <button type="button" class="btn btn-outline-success mb-3" (click)="agregarDetalle()">
+                <i class="bi bi-plus-circle me-2"></i> Agregar ítem
+              </button>
+
+              <div formArrayName="detalles">
+                <ng-container *ngFor="let item of detallesArray.controls; let i = index" [formGroupName]="i">
+                  <div class="card mb-3 shadow-sm border-info">
+                    <div class="card-body">
+                      <div class="row g-3">
+                        <div class="col-md-3">
+                          <label class="form-label">Código / Servicio</label>
+                          <select class="form-select" formControlName="idMaestro"
+                                  [class.is-invalid]="submitted && item.get('idMaestro')?.invalid">
+                            <option value="">Seleccione...</option>
+                            <option *ngFor="let m of maestrosDisponibles" [value]="m.id">{{ m.label }}</option>
+                          </select>
+                          <div class="invalid-feedback" *ngIf="submitted && item.get('idMaestro')?.errors?.['required']">
+                            Obligatorio
+                          </div>
+                        </div>
+
+                        <div class="col-md-3">
+                          <label class="form-label">Proveedor</label>
+                          <select class="form-select" formControlName="idProveedor"
+                                  [class.is-invalid]="submitted && item.get('idProveedor')?.invalid">
+                            <option value="">Seleccione...</option>
+                            <option *ngFor="let p of proveedoresDisponibles" [value]="p.id">{{ p.label }}</option>
+                          </select>
+                          <div class="invalid-feedback" *ngIf="submitted && item.get('idProveedor')?.errors?.['required']">
+                            Obligatorio
+                          </div>
+                        </div>
+
+                        <div class="col-md-3">
+                          <label class="form-label">Cantidad</label>
+                          <input type="number" step="0.01" min="0.01" class="form-control" formControlName="cantidad"
+                                 [class.is-invalid]="submitted && item.get('cantidad')?.invalid">
+                          <div class="invalid-feedback" *ngIf="submitted && item.get('cantidad')?.errors?.['required']">
+                            Obligatorio
+                          </div>
+                          <div class="invalid-feedback" *ngIf="submitted && item.get('cantidad')?.errors?.['min']">
+                            Mínimo 0.01
+                          </div>
+                        </div>
+
+                        <div class="col-md-3">
+                          <label class="form-label">Precio unitario</label>
+                          <input type="number" step="0.01" min="0.01" class="form-control" formControlName="precioUnitario"
+                                 [class.is-invalid]="submitted && item.get('precioUnitario')?.invalid">
+                          <div class="invalid-feedback" *ngIf="submitted && item.get('precioUnitario')?.errors?.['required']">
+                            Obligatorio
+                          </div>
+                          <div class="invalid-feedback" *ngIf="submitted && item.get('precioUnitario')?.errors?.['min']">
+                            Mínimo 0.01
+                          </div>
+                        </div>
+
+                        <div class="col-12 text-end mt-2">
+                          <button type="button" class="btn btn-outline-danger btn-sm" (click)="eliminarDetalle(i)">
+                            <i class="bi bi-trash3"></i> Eliminar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <div *ngIf="detallesArray.length === 0" class="alert alert-light text-center border py-4">
+                  No hay ítems agregados aún
+                </div>
+              </div>
+            </div>
+
+            <!-- Botones finales -->
+            <div class="d-flex gap-3 justify-content-end mt-5 pt-4 border-top">
+              <button type="button" class="btn btn-outline-secondary btn-lg px-5" (click)="resetForm()" [disabled]="loading">
+                <i class="bi bi-arrow-counterclockwise me-2"></i> Limpiar
+              </button>
+
+              <button type="submit" class="btn btn-primary btn-lg px-5" [disabled]="loading || form.invalid">
+                <ng-container *ngIf="!loading">
+                  <i class="bi bi-check2-circle me-2"></i> Crear OT Completa
+                </ng-container>
+                <ng-container *ngIf="loading">
+                  <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                  Procesando...
+                </ng-container>
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+        <div class="card-footer bg-light text-muted small text-center py-3">
+          Campos con <span class="text-danger">*</span> son obligatorios • Trabajadores y detalles pueden estar vacíos
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

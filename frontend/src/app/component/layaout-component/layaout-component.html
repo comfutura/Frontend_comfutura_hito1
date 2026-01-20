@@ -1,0 +1,63 @@
+<!-- layout.component.html -->
+<div class="layout-wrapper">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <span class="logo-icon">🚀</span>
+        <h1>MiApp</h1>
+      </div>
+    </div>
+
+    <nav class="sidebar-menu">
+      <ul>
+        <li>
+          <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <span class="icon">📊</span>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a routerLink="/ot" routerLinkActive="active">
+            <span class="icon">🛠️</span>
+            Crear OT
+          </a>
+        </li>
+        <!-- Agrega más fácilmente aquí -->
+        <!--
+        <li>
+          <a routerLink="/reportes">
+            <span class="icon">📈</span>
+            Reportes
+          </a>
+        </li>
+        -->
+      </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <span class="user-avatar">👤</span>
+        <span>{{ username }}</span>
+      </div>
+       <button class="dropdown-item text-danger" (click)="logout()">
+    Cerrar Sesión
+  </button>
+    </div>
+  </aside>
+
+  <!-- Contenido principal -->
+  <div class="main-area">
+    <header class="top-bar">
+      <h2 class="page-title">
+        <!-- Puedes usar un servicio o resolver para título dinámico -->
+      </h2>
+    </header>
+
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+</div>
